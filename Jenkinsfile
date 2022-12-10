@@ -15,7 +15,7 @@ node{
 	        }
 	    }
    stage('Build Docker Imager'){
-   sh 'docker build -t demoimage/myweb:0.0.2 .'
+   sh 'docker build -t ksnare27/myweb:0.0.2 .'
    }
    stage('Docker Image Push'){
    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
@@ -25,8 +25,8 @@ node{
    }
   stage('Nexus Image Push'){
    sh "docker login -u admin -p admin123 43.205.242.152:8083"
-   sh "docker tag demoimage/myweb:0.0.2 43.205.242.152:8083/damo:1.0.0"
-   sh 'docker push 43.205.242.152:8083/damo:1.0.0'
+   sh "docker tag ksnare27/myweb:0.0.2 43.205.242.152:8083/ksnare27:1.0.0"
+   sh 'docker push 43.205.242.152:8083/ksnare27:1.0.0'
    }
    stage('Remove Previous Container'){
 	try{
@@ -35,7 +35,7 @@ node{
 		//  do nothing if there is an exception
 	}
    stage('Docker deployment'){
-   sh 'docker run -d -p 8090:8080 --name tomcattest demoimage/myweb:0.0.2' 
+   sh 'docker run -d -p 8090:8080 --name tomcattest ksnare27/myweb:0.0.2' 
    }
 }
 }
